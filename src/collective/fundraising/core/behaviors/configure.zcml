@@ -1,0 +1,54 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:grok="http://namespaces.zope.org/grok"
+    i18n_domain="collective.fundraising.core">
+
+  <include package="plone.behavior" file="meta.zcml" />
+
+  <include package="plone.directives.form" file="meta.zcml" />
+  <include package="plone.directives.form" />
+
+  <grok:grok package="." />
+
+  <plone:behavior
+      title="Fundraising Campaign"
+      description="Enables functionality to manage a fundraising campaign"
+      provides=".fundraisingcampaign.IFundraisingCampaign"
+      factory=".fundraisingcampaign.FundraisingCampaign"
+      for="plone.dexterity.interfaces.IDexterityContent"
+      />
+
+  <plone:behavior
+      title="Fundraising Page"
+      description="Enables functionality to manage a fundraising page"
+      provides=".fundraisingpage.IFundraisingPage"
+      factory=".fundraisingpage.FundraisingPage"
+      for="plone.dexterity.interfaces.IDexterityContent"
+      />
+
+  <plone:behavior
+      title="Fundraising Product"
+      description="Enables functionality to manage a fundraising product"
+      provides=".fundraisingproduct.IFundraisingProduct"
+      factory=".fundraisingproduct.FundraisingProduct"
+      for="plone.dexterity.interfaces.IDexterityContent"
+      />
+
+  <plone:behavior
+      title="Fundraising Settings"
+      description="Enables functionality to manage a set of fundraising settings"
+      provides=".fundraisingsettings.IFundraisingSettings"
+      factory=".fundraisingsettings.FundraisingSettings"
+      for="plone.dexterity.interfaces.IDexterityContent"
+      />
+
+  <plone:behavior
+      title="Personal Fundraiser"
+      description="Enables functionality to manage a personal fundraising page"
+      provides=".personalfundraiser.IPersonalFundraiser"
+      factory=".personalfundraiser.PersonalFundraiser"
+      for="plone.dexterity.interfaces.IDexterityContent"
+      />
+</configure>

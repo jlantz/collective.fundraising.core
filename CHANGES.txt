@@ -1,0 +1,8 @@
+Changelog
+=========
+
+0.1a-dev (unreleased)
+---------------------
+
+- Package created using templer
+  [Jason Lantz]
