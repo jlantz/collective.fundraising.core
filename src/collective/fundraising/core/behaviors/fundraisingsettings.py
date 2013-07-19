@@ -5,6 +5,7 @@ from zope import schema
 from zope.component import adapts
 from zope.interface import alsoProvides, implements
 from plone.app.textfield import RichText
+from plone.namedfile.field import NamedBlobImage
 from z3c.relationfield.schema import RelationChoice
 from plone.formwidget.contenttree import ObjPathSourceBinder
 from collective.fundraising.core.behaviors.utils import get_local_or_default
@@ -20,9 +21,10 @@ class IFundraisingSettings(model.Schema):
         title=_(u"Organization Name"),
         description=_(u"Enter the name of the recipient organization for donations."),
     )
-    cf_fs_org_logo = schema.TextLine(
+    cf_fs_org_logo = NamedBlobImage(
         title=_(u"Organization Logo"),
         description=_(u"Upload a logo image for the organization."),
+        required=False,
     )
     cf_fs_ask_levels = schema.Text(
         title=_(u"Donation Ask Levels"),

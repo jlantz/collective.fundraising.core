@@ -33,3 +33,13 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Robot test related
+library-settings.txt
+log.html
+output.xml
+report.html
+selenium* 
+
+# VI swap files
+.*.swp

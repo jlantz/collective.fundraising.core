@@ -1,6 +1,7 @@
 from plone.app.testing import PloneWithPackageLayer
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import FunctionalTesting
+from plone.testing.z2 import ZSERVER_FIXTURE
 
 import collective.fundraising.core
 
@@ -16,5 +17,5 @@ COLLECTIVE_FUNDRAISING_CORE_INTEGRATION = IntegrationTesting(
     name="COLLECTIVE_FUNDRAISING_CORE_INTEGRATION")
 
 COLLECTIVE_FUNDRAISING_CORE_FUNCTIONAL = FunctionalTesting(
-    bases=(COLLECTIVE_FUNDRAISING_CORE, ),
+    bases=(COLLECTIVE_FUNDRAISING_CORE, ZSERVER_FIXTURE),
     name="COLLECTIVE_FUNDRAISING_CORE_FUNCTIONAL")
