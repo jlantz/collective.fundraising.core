@@ -40,6 +40,7 @@ log.html
 output.xml
 report.html
 selenium* 
+source.html
 
 # VI swap files
 .*.swp

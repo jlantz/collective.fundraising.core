@@ -6,14 +6,15 @@ Library  OperatingSystem
 Resource  plone/app/robotframework/selenium.robot
 Resource  plone/app/robotframework/variables.robot
 Resource  plone/app/robotframework/keywords.robot
+Resource  plone/app/robotframework/server.robot
 
 Suite Setup  Start browser
 Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-Fundraising Settings behavior fields show in add form
-    Go to homepage
+Fields for behavior Fundraising Settings are available
+    Wait until page contains  Plone
     Login as site owner
 
     Create dexterity type  Test Fundraising Settings
@@ -24,14 +25,24 @@ Fundraising Settings behavior fields show in add form
     Click link  xpath=//a/span[contains(., "Test Fundraising Settings")]/..
     Wait until page contains  Add Test Fundraising Settings
 
-    ${src}=    Selenium2Library.Get Source
-    OperatingSystem.Create File    ${OUTPUT_DIR}/source.html    ${src}
+    Input text  form-widgets-IDublinCore-title  Test Organization Settings
+    Populate Fundraising Settings field  org_name  Test Organization
+    Populate Fundraising Settings field  ask_levels  5|5,10,25,50
+    Populate Fundraising Settings field  ask_level  5
+    Populate Fundraising Settings field  goal  100
+    Populate Fundraising Settings field  ask_quantities  1|1,2,3,4,5
+    Populate Fundraising Settings field  ask_quantity  1
+    Select Fundraising Settings checkbox  allow_personal
+    Populate Fundraising Settings field  completion_threshold  25
+    Populate Fundraising Settings field  completion_threshold  10
+    Click Button  Save
 
-    Input Text  form-widgets-IFundraisingSettings-cf_fs_org_name  Test Organization
-    Input Text  form-widgets-IFundraisingSettings-cf_fs_ask_levels  5|5,10,25,50,100,250
-    Input Text  form-widgets-IFundraisingSettings-cf_fs_ask_level  5
-    Input Text  form-widgets-IFundraisingSettings-cf_fs_goal  100
+    Wait until page contains  link=Edit
+    Populate Fundraising Settings field  completion_threshold  15
+    Populate Fundraising Settings field  completion_threshold  5
+    Click Button  Save
 
+    
 
 *** Keywords ***
 
@@ -55,3 +66,11 @@ Enable behavior
     Click button  Save
     Page should contain  Behaviors successfully updated
     Checkbox should be selected  id=${for}
+
+Populate Fundraising Settings field
+    [Arguments]  ${name}  ${value}
+    Input text  form-widgets-IFundraisingSettings-cf_fs_${name}  ${value}
+
+Select Fundraising Settings checkbox
+    [Arguments]  ${name}
+    Select checkbox  form-widgets-IFundraisingSettings-cf_fs_${name}-0
