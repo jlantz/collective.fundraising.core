@@ -15,7 +15,7 @@
   <plone:behavior
       title="Fundraising Campaign"
       description="Enables functionality to manage a fundraising campaign"
-      provides=".fundraisingcampaign.IFundraisingCampaign"
+      provides=".interfaces.IFundraisingCampaign"
       factory=".fundraisingcampaign.FundraisingCampaign"
       for="plone.dexterity.interfaces.IDexterityContent"
       />
@@ -23,7 +23,7 @@
   <plone:behavior
       title="Fundraising Page"
       description="Enables functionality to manage a fundraising page"
-      provides=".fundraisingpage.IFundraisingPage"
+      provides=".interfaces.IFundraisingPage"
       factory=".fundraisingpage.FundraisingPage"
       for="plone.dexterity.interfaces.IDexterityContent"
       />
@@ -31,7 +31,7 @@
   <plone:behavior
       title="Fundraising Product"
       description="Enables functionality to manage a fundraising product"
-      provides=".fundraisingproduct.IFundraisingProduct"
+      provides=".interfaces.IFundraisingProduct"
       factory=".fundraisingproduct.FundraisingProduct"
       for="plone.dexterity.interfaces.IDexterityContent"
       />
@@ -39,7 +39,7 @@
   <plone:behavior
       title="Fundraising Settings"
       description="Enables functionality to manage a set of fundraising settings"
-      provides=".fundraisingsettings.IFundraisingSettings"
+      provides=".interfaces.IFundraisingSettings"
       factory=".fundraisingsettings.FundraisingSettings"
       for="plone.dexterity.interfaces.IDexterityContent"
       />
@@ -47,7 +47,7 @@
   <plone:behavior
       title="Personal Fundraiser"
       description="Enables functionality to manage a personal fundraising page"
-      provides=".personalfundraiser.IPersonalFundraiser"
+      provides=".interfaces.IPersonalFundraiser"
       factory=".personalfundraiser.PersonalFundraiser"
       for="plone.dexterity.interfaces.IDexterityContent"
       />

@@ -4,17 +4,8 @@ from plone.supermodel import model
 from zope import schema
 from zope.component import adapts
 from zope.interface import alsoProvides, implements
-
 from collective.fundraising.core import MessageFactory as _
-
-
-class IFundraisingProduct(model.Schema):
-    """
-       Marker/Form interface for Fundraising Product
-    """
-
-
-alsoProvides(IFundraisingProduct, IFormFieldProvider)
+from collective.fundraising.core.behaviors.interfaces import IFundraisingProduct
 
 class FundraisingProduct(object):
     """
