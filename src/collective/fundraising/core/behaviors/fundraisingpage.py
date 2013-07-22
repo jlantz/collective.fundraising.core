@@ -20,7 +20,7 @@ class FundraisingPage(object):
     def __init__(self,context):
         self.context = context
 
-    image = get_local_or_default('total', IFundraisingPage)
+    image = get_local_or_default('image', IFundraisingPage)
     goal = get_local_or_default('goal', IFundraisingPage)
     start_date = get_local_or_default('start_date', IFundraisingPage)
     end_date = get_local_or_default('end_date', IFundraisingPage)

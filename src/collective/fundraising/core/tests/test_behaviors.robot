@@ -14,6 +14,7 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 Fundraising Settings fields store values
+    [tags]  Fundraising Settings
     Wait until page contains  Plone
     Login as site owner
 
@@ -57,6 +58,8 @@ Fundraising Settings fields store values
     Fundraising Settings value should be  pf_completion_threshold  5
 
 Fundraising Campaign fields store values
+    [tags]  Fundraising Campaign
+
     Wait until page contains  Plone
     Login as site owner
 
@@ -84,6 +87,8 @@ Fundraising Campaign fields store values
     Click Button  Save
 
 Fundraising Page field store values
+    [tags]  Fundraising Page
+
     Wait until page contains  Plone
     Login as site owner
 
@@ -108,6 +113,8 @@ Fundraising Page field store values
     Fundraising Page value should be  goal  220
 
 Personal Fundraiser field stores values
+    [tags]  Personal Fundraiser
+
     Wait until page contains  Plone
     Login as site owner
 
@@ -132,6 +139,7 @@ Personal Fundraiser field stores values
     Personal Fundraiser value should be  pf_goal  230
 
 Personal Fundraiser can combine with page, campaign, and settings
+    [tags]  Personal Fundraiser  Fundraising Page  Fundraising Campaign  Fundraising Settings
     Wait until page contains  Plone
     Login as site owner
 
@@ -191,7 +199,110 @@ Personal Fundraiser can combine with page, campaign, and settings
     Personal Fundraiser value should be  pf_goal  230
 
 
+Fundraising Campaign inherits default values from Fundraising Settings
+    [tags]  Inheritance  Fundraising Campaign  Fundraising Settings
+    Wait until page contains  Plone
+    Login as site owner
 
+    Create dexterity type  Test Settings  test_settings
+    Enable behavior  Fundraising Settings
+    Create dexterity type  Test Campaign  test_campaign
+    Enable behavior  Fundraising Campaign
+
+    Go to homepage
+    Open Add New Menu
+    Click link  xpath=//a/span[contains(., "Test Settings")]/..
+    Wait until page contains  Add Test Settings
+
+    Input text  form-widgets-IDublinCore-title  Test Settings 
+    Populate Fundraising Settings field  org_name  Test Organization
+    Populate Fundraising Settings field  goal  100
+    Select Fundraising Settings checkbox  allow_pf
+    Click Button  Save
+
+    Open Add New Menu
+    Click link  xpath=//a/span[contains(., "Test Campaign")]/..
+    Input text  form-widgets-IDublinCore-title  Test Campaign
+    Click Button  Save
+
+    Click Edit in edit bar
+    Fundraising Campaign value should be  goal  100
+    Click Button  Cancel
+
+    Go to  ${PLONE_URL}/test-settings
+    Click Edit in edit bar
+    Fundraising Settings value should be  goal  100
+    Populate Fundraising Settings field  goal  200
+    Click Button  Save
+
+    Go to  ${PLONE_URL}/test-settings/test-campaign
+    Click Edit in edit bar
+    Fundraising Campaign value should be  goal  200
+    Populate Fundraising Campaign field  goal  300
+    Click Button  Save
+
+    Go to  ${PLONE_URL}/test-settings
+    Click Edit in edit bar
+    Populate Fundraising Settings field  goal  400
+    Click Button  Save
+
+    Go to  ${PLONE_URL}/test-settings/test-campaign
+    Click Edit in edit bar
+    Fundraising Campaign value should be  goal  300
+    Click Button  Cancel
+    
+
+Fundraising Page inherits default values from Fundraising Campaign and Fundraising Settings
+    [tags]  Inheritance  Fundraising Campaign  Fundraising Settings
+    Wait until page contains  Plone
+    Login as site owner
+
+    Create dexterity type  Test Settings  test_settings
+    Enable behavior  Fundraising Settings
+    Create dexterity type  Test Campaign  test_campaign
+    Enable behavior  Fundraising Campaign
+
+    Go to homepage
+    Open Add New Menu
+    Click link  xpath=//a/span[contains(., "Test Settings")]/..
+    Wait until page contains  Add Test Settings
+
+    Input text  form-widgets-IDublinCore-title  Test Settings 
+    Populate Fundraising Settings field  org_name  Test Organization
+    Populate Fundraising Settings field  goal  100
+    Select Fundraising Settings checkbox  allow_pf
+    Click Button  Save
+
+    Open Add New Menu
+    Click link  xpath=//a/span[contains(., "Test Campaign")]/..
+    Input text  form-widgets-IDublinCore-title  Test Campaign
+    Click Button  Save
+
+    Click Edit in edit bar
+    Fundraising Campaign value should be  goal  100
+    Click Button  Cancel
+
+    Go to  ${PLONE_URL}/test-settings
+    Click Edit in edit bar
+    Fundraising Settings value should be  goal  100
+    Populate Fundraising Settings field  goal  200
+    Click Button  Save
+
+    Go to  ${PLONE_URL}/test-settings/test-campaign
+    Click Edit in edit bar
+    Fundraising Campaign value should be  goal  200
+    Populate Fundraising Campaign field  goal  300
+    Click Button  Save
+
+    Go to  ${PLONE_URL}/test-settings
+    Click Edit in edit bar
+    Populate Fundraising Settings field  goal  400
+    Click Button  Save
+
+    Go to  ${PLONE_URL}/test-settings/test-campaign
+    Click Edit in edit bar
+    Fundraising Campaign value should be  goal  300
+    Click Button  Cancel
 *** Keywords ***
 
 Start browser
@@ -205,7 +316,11 @@ Create dexterity type
     Input Text  css=#formfield-form-widgets-id input  ${id}
     Input Text  css=#formfield-form-widgets-description textarea  Test content type: ${title}
     Click Button  Add
-    Wait until page contains element  link=Behaviors
+    
+    Wait until page contains element  link=Overview
+    Click Overview in edit bar
+    Select radiobutton  form.widgets.filter_content_types  all
+    Click Button  Apply
 
 Enable behavior 
     [Arguments]  ${name}

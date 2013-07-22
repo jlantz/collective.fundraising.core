@@ -1,4 +1,5 @@
 from Acquisition import aq_base
+from Acquisition import aq_parent
 from plone.app.textfield import RichTextValue
 from collective.fundraising.core.behaviors.interfaces import IFundraisingCampaign
 from collective.fundraising.core.behaviors.interfaces import IFundraisingPage
@@ -64,9 +65,12 @@ def get_default(behavior, name, binterface):
 
     adapted = parent_binterface(behavior.context, None)
     if adapted is None:
-        return None
+        # NOTE: This assumes the direct parent is the provider of the inheritance behavior
+        adapted = parent_binterface(aq_parent(behavior.context), None)
+        if adapted is None:
+            return None
 
-    val = getattr(adapted.context, '%s_%s' % (binterface.__name__, name), None)
+    val = getattr(adapted.context, '%s_%s' % (parent_binterface.__name__, name), None)
     if val is None:
         return None
 
