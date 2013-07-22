@@ -10,7 +10,7 @@ from collective.fundraising.core.behaviors.interfaces import IPersonalFundraiser
 # looking up default values
 BEHAVIOR_INHERITANCE_MAP = {
     IFundraisingPage: IFundraisingCampaign,
-    IPersonalFundraiser: IPersonalFundraiser,
+    IPersonalFundraiser: IFundraisingCampaign,
     IFundraisingCampaign: IFundraisingSettings,
     IFundraisingSettings: None,
 }
@@ -63,17 +63,40 @@ def get_default(behavior, name, binterface):
     if parent_binterface is None:
         return None
 
+    # Try the parent behavior
     adapted = parent_binterface(behavior.context, None)
     if adapted is None:
         # NOTE: This assumes the direct parent is the provider of the inheritance behavior
         adapted = parent_binterface(aq_parent(behavior.context), None)
         if adapted is None:
             return None
+    val = getattr(aq_base(adapted.context), '%s_%s' % (parent_binterface.__name__, name), None)
+    test_val = get_test_val(val)
+    if test_val is None:
 
-    val = getattr(adapted.context, '%s_%s' % (parent_binterface.__name__, name), None)
+        # If still no value, try inheriting from parent behavior's parent behavior
+        root_binterface = BEHAVIOR_INHERITANCE_MAP.get(parent_binterface, None)
+        if root_binterface is None:
+            return None
+        root_adapted = root_binterface(aq_parent(adapted.context), None)
+        if root_adapted is None:
+            return None
+        val = getattr(aq_base(root_adapted.context), '%s_%s' % (root_binterface.__name__, name), None)
+        if val is None:
+            return None
+        test_val = get_test_val(val)
+        if test_val is None:
+            return None
+
+    if test_val is not None:
+        return val
+    
+
+
+
+    val = getattr(aq_base(adapted), name, None)
     if val is None:
         return None
-
     test_val = get_test_val(val)
     if test_val is None:
         return None

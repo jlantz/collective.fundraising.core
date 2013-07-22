@@ -281,6 +281,11 @@ class IFundraisingSettings(model.Schema):
         description=_(u"If provided, the goal field is pre-filled with this value on new campaigns"),
         required=False,
     )
+    pf_goal = schema.Int(
+        title=_(u"Default Personal Goal"),
+        description=_(u"The default value of the Goal field when creating a new Personal Fundraiser."),
+        required=False,
+    )
     email_thank_you = RelationChoice(
         title=_(u"Email Template - Thank You"),
         description=_(u"Select the default email template for the donation thank you email sent to donors."),

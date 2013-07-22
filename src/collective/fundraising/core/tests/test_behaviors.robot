@@ -253,7 +253,7 @@ Fundraising Campaign inherits default values from Fundraising Settings
     
 
 Fundraising Page inherits default values from Fundraising Campaign and Fundraising Settings
-    [tags]  Inheritance  Fundraising Campaign  Fundraising Settings
+    [tags]  Inheritance  Fundraising Page  Fundraising Campaign  Fundraising Settings
     Wait until page contains  Plone
     Login as site owner
 
@@ -261,6 +261,8 @@ Fundraising Page inherits default values from Fundraising Campaign and Fundraisi
     Enable behavior  Fundraising Settings
     Create dexterity type  Test Campaign  test_campaign
     Enable behavior  Fundraising Campaign
+    Create dexterity type  Test Page  test_page
+    Enable behavior  Fundraising Page
 
     Go to homepage
     Open Add New Menu
@@ -278,31 +280,106 @@ Fundraising Page inherits default values from Fundraising Campaign and Fundraisi
     Input text  form-widgets-IDublinCore-title  Test Campaign
     Click Button  Save
 
-    Click Edit in edit bar
-    Fundraising Campaign value should be  goal  100
-    Click Button  Cancel
+    Open Add New Menu
+    Click link  xpath=//a/span[contains(., "Test Page")]/..
+    Input text  form-widgets-IDublinCore-title  Test Page
+    Click Button  Save
 
+    Click Edit in edit bar
+    Fundraising Page value should be  goal  100
+    Click Button  Cancel
+    
     Go to  ${PLONE_URL}/test-settings
     Click Edit in edit bar
     Fundraising Settings value should be  goal  100
-    Populate Fundraising Settings field  goal  200
+    Populate Fundraising Settings field  goal   200
     Click Button  Save
+
+    Go to  ${PLONE_URL}/test-settings/test-campaign/test-page
+    Click Edit in edit bar
+    Fundraising Page value should be  goal  200
+    Click Button  Cancel
 
     Go to  ${PLONE_URL}/test-settings/test-campaign
     Click Edit in edit bar
-    Fundraising Campaign value should be  goal  200
-    Populate Fundraising Campaign field  goal  300
+    Populate Fundraising Campaign field  goal  110
     Click Button  Save
 
+    Go to  ${PLONE_URL}/test-settings/test-campaign/test-page
+    Click Edit in edit bar
+    Fundraising Page value should be  goal  110
+    Populate Fundraising Page field  goal  120
+    Click Button  Save
+
+    Click Edit in edit bar
+    Fundraising Page value should be  goal  120
+    Click Button  Cancel
+
+
+Personal Fundraiser inherits default values from Fundraising Campaign and Fundraising Settings
+    [tags]  Inheritance  Personal Fundraiser  Fundraising Campaign  Fundraising Settings
+    Wait until page contains  Plone
+    Login as site owner
+
+    Create dexterity type  Test Settings  test_settings
+    Enable behavior  Fundraising Settings
+    Create dexterity type  Test Campaign  test_campaign
+    Enable behavior  Fundraising Campaign
+    Create dexterity type  Test Personal  test_personal
+    Enable behavior  Personal Fundraiser
+
+    Go to homepage
+    Open Add New Menu
+    Click link  xpath=//a/span[contains(., "Test Settings")]/..
+    Wait until page contains  Add Test Settings
+
+    Input text  form-widgets-IDublinCore-title  Test Settings 
+    Populate Fundraising Settings field  org_name  Test Organization
+    Populate Fundraising Settings field  pf_goal  100
+    Select Fundraising Settings checkbox  allow_pf
+    Click Button  Save
+
+    Open Add New Menu
+    Click link  xpath=//a/span[contains(., "Test Campaign")]/..
+    Input text  form-widgets-IDublinCore-title  Test Campaign
+    Click Button  Save
+
+    Open Add New Menu
+    Click link  xpath=//a/span[contains(., "Test Personal")]/..
+    Input text  form-widgets-IDublinCore-title  Test Personal
+    Click Button  Save
+
+    Click Edit in edit bar
+    Personal Fundraiser value should be  pf_goal  100
+    Click Button  Cancel
+    
     Go to  ${PLONE_URL}/test-settings
     Click Edit in edit bar
-    Populate Fundraising Settings field  goal  400
+    Fundraising Settings value should be  pf_goal  100
+    Populate Fundraising Settings field  pf_goal   200
     Click Button  Save
+
+    Go to  ${PLONE_URL}/test-settings/test-campaign/test-personal
+    Click Edit in edit bar
+    Personal Fundraiser value should be  pf_goal  200
+    Click Button  Cancel
 
     Go to  ${PLONE_URL}/test-settings/test-campaign
     Click Edit in edit bar
-    Fundraising Campaign value should be  goal  300
+    Populate Fundraising Campaign field  pf_goal  110
+    Click Button  Save
+
+    Go to  ${PLONE_URL}/test-settings/test-campaign/test-personal
+    Click Edit in edit bar
+    Personal Fundraiser value should be  pf_goal  110
+    Populate Personal Fundraiser field  pf_goal  120
+    Click Button  Save
+
+    Click Edit in edit bar
+    Personal Fundraiser value should be  pf_goal  120
     Click Button  Cancel
+
+
 *** Keywords ***
 
 Start browser

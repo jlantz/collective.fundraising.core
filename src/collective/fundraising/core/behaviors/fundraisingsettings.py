@@ -41,6 +41,7 @@ class FundraisingSettings(object):
     list_donor = get_local_or_default('list_donor', IFundraisingSettings)
     allow_pf = get_local_or_default('allow_pf', IFundraisingSettings)
     goal = get_local_or_default('goal', IFundraisingSettings)
+    pf_goal = get_local_or_default('pf_goal', IFundraisingSettings)
     pf_appeal = get_local_or_default('pf_appeal', IFundraisingSettings)
     pf_thank_you = get_local_or_default('pf_thank_you', IFundraisingSettings)
     completion_threshold = get_local_or_default('completion_threshold', IFundraisingSettings)
