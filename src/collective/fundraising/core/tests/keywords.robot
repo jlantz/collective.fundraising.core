@@ -84,3 +84,19 @@ Populate Personal Fundraiser field
 Personal Fundraiser value should be
     [Arguments]  ${name}  ${value}
     Textfield value should be  form-widgets-IPersonalFundraiser-${name}  ${value}
+
+Populate Donor field
+    [Arguments]  ${name}  ${value}
+    Input text  form-widgets-IDonor-${name}  ${value}
+
+Donor value should be
+    [Arguments]  ${name}  ${value}
+    Textfield value should be  form-widgets-IDonor-${name}  ${value}
+
+Populate Donation field
+    [Arguments]  ${name}  ${value}
+    Input text  form-widgets-IDonation-${name}  ${value}
+
+Donation value should be
+    [Arguments]  ${name}  ${value}
+    Textfield value should be  form-widgets-IDonation-${name}  ${value}

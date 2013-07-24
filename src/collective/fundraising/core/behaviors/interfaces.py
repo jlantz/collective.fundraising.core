@@ -156,7 +156,8 @@ class IFundraisingCampaign(model.Schema):
         """ Returns a catalog result set of all fundraising pages """
 
     def get_fundraising_settings(self):
-        """ Returns an adapted object providing the IFundraisingSettings behavior for this campaign """
+        """ Returns the related IFundraisingSettings behavior instance if it can be found or None """
+
 
 alsoProvides(IFundraisingCampaign, IFormFieldProvider)
 
@@ -215,6 +216,13 @@ class IFundraisingPage(model.Schema):
             Returns a list of changed fields on the current object. 
         """
         return []
+
+    def get_fundraising_campaign(self):
+        """ Returns the related IFundraisingCampaign behavior instance if it can be found or None """
+
+    def get_fundraising_settings(self):
+        """ Returns the related IFundraisingSettings behavior instance if it can be found or None """
+
 
 alsoProvides(IFundraisingPage, IFormFieldProvider)
 
@@ -418,4 +426,123 @@ class IPersonalFundraiser(model.Schema):
         default=0,
     )
 
+    def get_fundraising_page(self):
+        """ Returns the related IFundraisingPage behavior instance if it can be found or None """
+
+    def get_fundraising_campaign(self):
+        """ Returns the related IFundraisingCampaign behavior instance if it can be found or None """
+
+    def get_fundraising_settings(self):
+        """ Returns the related IFundraisingSettings behavior instance if it can be found or None """
+
 alsoProvides(IPersonalFundraiser, IFormFieldProvider)
+
+class IDonor(model.Schema):
+    first_name = schema.TextLine(
+        title=_(u'First Name'),
+        required = False,
+    )
+    last_name = schema.TextLine(
+        title=_(u'Last Name'),
+        required = False,
+    )
+    email = schema.TextLine(
+        title=_(u'Email'),
+        required = False,
+    )
+    email_opt_in = schema.Bool(
+        title=_(u'Email Opt In'),
+        required=False,
+    )
+    phone = schema.TextLine(
+        title=_(u'Phone'),
+        required = False,
+    )
+    address_street = schema.TextLine(
+        title=_(u'Street Address'),
+        required = False,
+    )
+    address_city = schema.TextLine(
+        title=_(u'City'),
+        required = False,
+    )
+    address_state = schema.TextLine(
+        title=_(u'State'),
+        required = False,
+    )
+    address_zip = schema.TextLine(
+        title=_(u'Zip Code'),
+        required = False,
+    )
+    address_country = schema.TextLine(
+        title=_(u'Country'),
+        required = False,
+    )
+    is_public = schema.Bool(
+        title=_(u'Is Public?'),
+        description=_(u"Should name and location be visible to the public in listings?"),
+        default=True,
+        required = False,
+    )
+
+    def get_donations(self):
+        """ Return the catalog results of all donations by this donor """
+
+alsoProvides(IDonor, IFormFieldProvider)
+
+
+class IDonation(model.Schema):
+    amount = schema.Float(
+        title=_(u'Amount'),
+    )
+    is_recurring = schema.Bool(
+        title=u"Is Recurring?",
+        description=u"Is this a recurring donation?",
+        required=False,
+        default=False,
+    )
+    recurring_plan = schema.TextLine(
+        title=u"Recurring Plan",
+        description=u"If this is a recurring donation, this is set to the ID of the plan",
+        required=False,
+    )
+    is_public = schema.Bool(
+        title=_(u'Is Public?'),
+        description=_(u"Should this donation show up in listings such as recent donations?"),
+        default=True,
+    )
+    receipt_sent = schema.Bool(
+        title=u"Receipt Sent?",
+        description=u"Was an email receipt sent for this donation?  NOTE: This is checked automatically by the system",
+        required=False,
+        default=False,
+    )
+    notification_sent = schema.Bool(
+        title=u"Notification Sent to Fundraiser?",
+        description=u"Was an email notification sent for this donation?  NOTE: This is checked automatically by the system",
+        required=False,
+        default=False,
+    )
+    added = schema.Bool(
+        title=u"Added to Campaign?",
+        description=u"Was this donation added to the totals for the campaign?  NOTE: This is checked automatically by the system",
+        required=False,
+        default=False,
+    )
+
+    def get_fundraising_settings(self):
+        """ Returns the related IFundraisingSettings behavior instance if it can be found or None """
+
+    def get_fundraising_campaign(self):
+        """ Returns the related IFundraisingCampaign behavior instance if it can be found or None """
+
+    def get_fundraising_page(self):
+        """ Returns the related IFundraisingPage behavior instance if it can be found or None """
+
+    def get_personal_fundraiser(self):
+        """ Returns the related IPersonalFundraiser behavior instance if it can be found or None """
+
+    def get_donor(self):
+        """ Returns the related IDonor behavior instance if it can be found or None """
+
+alsoProvides(IDonation, IFormFieldProvider)

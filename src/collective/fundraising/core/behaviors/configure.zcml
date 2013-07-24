@@ -51,4 +51,21 @@
       factory=".personalfundraiser.PersonalFundraiser"
       for="plone.dexterity.interfaces.IDexterityContent"
       />
+
+  <plone:behavior
+      title="Donor"
+      description="Enables functionality to manage fields for a Donor's information"
+      provides=".interfaces.IDonor"
+      factory=".donor.Donor"
+      for="plone.dexterity.interfaces.IDexterityContent"
+      />
+
+  <plone:behavior
+      title="Donation"
+      description="Enables functionality to manage fields for a Donation's information"
+      provides=".interfaces.IDonation"
+      factory=".donation.Donation"
+      for="plone.dexterity.interfaces.IDexterityContent"
+      />
+
 </configure>
