@@ -128,10 +128,14 @@ Personal Fundraiser fields store values
     Wait until page contains  Add Test Personal Fundraiser
 
     Input text  form-widgets-IDublinCore-title  Test Personal Fundraiser
+    Populate Personal Fundraiser field  first_name  James
+    Populate Personal Fundraiser field  last_name  Madison
     Populate Personal Fundraiser field  pf_goal  130
     Click button  Save
 
     Click Edit in edit bar
+    Personal Fundraiser value should be  first_name  James
+    Personal Fundraiser value should be  last_name  Madison
     Personal Fundraiser value should be  pf_goal  130
     Populate Personal Fundraiser field  pf_goal  230
     Click button  Save
@@ -191,6 +195,32 @@ Donation fields store values
     Click Edit in edit bar
     Donation value should be  amount  110.0
 
+Dedication fields store values
+    [tags]  Dedication
+
+    Wait until page contains  Plone
+    Login as site owner
+
+    Create dexterity type  Test Dedication  test_dedication
+    Enable behavior  Dedication
+
+    Go to homepage
+    Open Add New Menu
+    Click link  xpath=//a/span[contains(., "Test Dedication")]/..
+    Wait until page contains  Add Test Dedication
+
+    Input text  form-widgets-IDublinCore-title  Test Dedication
+    Populate Dedication field  dedication_type  honorary
+    Click button  Save
+
+    Click Edit in edit bar
+    Dedication value should be  dedication_type  honorary 
+    Populate Dedication field  dedication_type  memorial
+    Click button  Save
+
+    Click Edit in edit bar
+    Dedication value should be  dedication_type  memorial
+
 Personal Fundraiser can combine with page, campaign, and settings
     [tags]  Personal Fundraiser  Fundraising Page  Fundraising Campaign  Fundraising Settings
     Wait until page contains  Plone
@@ -221,6 +251,8 @@ Personal Fundraiser can combine with page, campaign, and settings
     Populate Fundraising Campaign field  goal  110
     Select Fundraising Campaign checkbox  allow_pf
     Populate Fundraising Page field  goal  120
+    Populate Personal Fundraiser field  first_name  James
+    Populate Personal Fundraiser field  last_name  Madison
     Populate Personal Fundraiser field  pf_goal  130
     Click button  Save
 
@@ -237,6 +269,8 @@ Personal Fundraiser can combine with page, campaign, and settings
     Fundraising Campaign value should be  goal  110
     Fundraising Campaign checkbox should be selected  allow_pf
     Fundraising Page value should be  goal  120
+    Personal Fundraiser value should be  first_name  James
+    Personal Fundraiser value should be  last_name  Madison
     Personal Fundraiser value should be  pf_goal  130
 
     Populate Fundraising Settings field  goal  200
@@ -251,14 +285,15 @@ Personal Fundraiser can combine with page, campaign, and settings
     Fundraising Page value should be  goal  220
     Personal Fundraiser value should be  pf_goal  230
 
-Donor can combine with Donation
-    [tags]  Donor  Donation
+Donor can combine with Donation and Dedication
+    [tags]  Donor  Donation  Dedication
     Wait until page contains  Plone
     Login as site owner
 
     Create dexterity type  Test Donation Combo  test_donation_combo
     Enable behavior  Donor
     Enable behavior  Donation
+    Enable behavior  Dedication
 
     Go to homepage
     Open Add New Menu
@@ -268,18 +303,22 @@ Donor can combine with Donation
     Input text  form-widgets-IDublinCore-title  Test Donation Combo 
     Populate Donor field  first_name  John
     Populate Donation field  amount  100
+    Populate Dedication field  first_name  Jack
     Click button  Save
 
     Click Edit in edit bar
     Donor value should be  first_name  John
     Donation value should be  amount  100.0
+    Dedication value should be  first_name  Jack
     Populate Donor field  first_name  Jane
     Populate Donation field  amount  110
+    Populate Dedication field  first_name  Jill
     Click button  Save
 
     Click Edit in edit bar
     Donor value should be  first_name  Jane
     Donation value should be  amount  110.0
+    Dedication value should be  first_name  Jill
 
 Fundraising Campaign inherits default values from Fundraising Settings
     [tags]  Inheritance  Fundraising Campaign  Fundraising Settings
@@ -362,6 +401,10 @@ Fundraising Page inherits default values from Fundraising Campaign and Fundraisi
     Input text  form-widgets-IDublinCore-title  Test Campaign
     Click button  Save
 
+    click Edit in edit bar
+    Fundraising Campaign value should be  goal  100
+    click button  Save
+
     Open Add New Menu
     Click link  xpath=//a/span[contains(., "Test Page")]/..
     Input text  form-widgets-IDublinCore-title  Test Page
@@ -429,9 +472,13 @@ Personal Fundraiser inherits default values from Fundraising Campaign and Fundra
     Open Add New Menu
     Click link  xpath=//a/span[contains(., "Test Personal")]/..
     Input text  form-widgets-IDublinCore-title  Test Personal
+    Populate Personal Fundraiser field  first_name  James
+    Populate Personal Fundraiser field  last_name  Madison
     Click button  Save
 
     Click Edit in edit bar
+    Personal Fundraiser value should be  first_name  James
+    Personal Fundraiser value should be  last_name  Madison
     Personal Fundraiser value should be  pf_goal  100
     Click button  Cancel
     

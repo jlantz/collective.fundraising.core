@@ -33,6 +33,3 @@ class Donor(object):
     address_zip = get_local_or_default('address_zip', IDonor)
     address_country = get_local_or_default('address_country', IDonor)
     is_public = get_local_or_default('public', IDonor)
-
-    def get_donations(self):
-        raise NotImplementedError

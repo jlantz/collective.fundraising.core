@@ -16,7 +16,7 @@
       title="Fundraising Campaign"
       description="Enables functionality to manage a fundraising campaign"
       provides=".interfaces.IFundraisingCampaign"
-      factory=".fundraisingcampaign.FundraisingCampaign"
+      factory=".campaign.FundraisingCampaign"
       for="plone.dexterity.interfaces.IDexterityContent"
       />
 
@@ -24,7 +24,7 @@
       title="Fundraising Page"
       description="Enables functionality to manage a fundraising page"
       provides=".interfaces.IFundraisingPage"
-      factory=".fundraisingpage.FundraisingPage"
+      factory=".page.FundraisingPage"
       for="plone.dexterity.interfaces.IDexterityContent"
       />
 
@@ -32,7 +32,7 @@
       title="Fundraising Product"
       description="Enables functionality to manage a fundraising product"
       provides=".interfaces.IFundraisingProduct"
-      factory=".fundraisingproduct.FundraisingProduct"
+      factory=".product.FundraisingProduct"
       for="plone.dexterity.interfaces.IDexterityContent"
       />
 
@@ -40,7 +40,7 @@
       title="Fundraising Settings"
       description="Enables functionality to manage a set of fundraising settings"
       provides=".interfaces.IFundraisingSettings"
-      factory=".fundraisingsettings.FundraisingSettings"
+      factory=".settings.FundraisingSettings"
       for="plone.dexterity.interfaces.IDexterityContent"
       />
 
@@ -48,7 +48,7 @@
       title="Personal Fundraiser"
       description="Enables functionality to manage a personal fundraising page"
       provides=".interfaces.IPersonalFundraiser"
-      factory=".personalfundraiser.PersonalFundraiser"
+      factory=".personal_fundraiser.PersonalFundraiser"
       for="plone.dexterity.interfaces.IDexterityContent"
       />
 
@@ -65,6 +65,14 @@
       description="Enables functionality to manage fields for a Donation's information"
       provides=".interfaces.IDonation"
       factory=".donation.Donation"
+      for="plone.dexterity.interfaces.IDexterityContent"
+      />
+
+  <plone:behavior
+      title="Dedication"
+      description="Enables functionality to manage fields for a Dedication"
+      provides=".interfaces.IDedication"
+      factory=".dedication.Dedication"
       for="plone.dexterity.interfaces.IDexterityContent"
       />
 

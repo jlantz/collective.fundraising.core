@@ -1,6 +1,9 @@
 from Acquisition import aq_base
+from Acquisition import aq_inner
 from Acquisition import aq_parent
+from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 from plone.app.textfield import RichTextValue
+from z3c.relationfield.relation import RelationValue
 from collective.fundraising.core.behaviors.interfaces import IFundraisingCampaign
 from collective.fundraising.core.behaviors.interfaces import IFundraisingPage
 from collective.fundraising.core.behaviors.interfaces import IFundraisingSettings
@@ -9,10 +12,9 @@ from collective.fundraising.core.behaviors.interfaces import IPersonalFundraiser
 # Map of which behavior each behavior should consider its parent for
 # looking up default values
 BEHAVIOR_INHERITANCE_MAP = {
-    IFundraisingPage: IFundraisingCampaign,
-    IPersonalFundraiser: IFundraisingCampaign,
-    IFundraisingCampaign: IFundraisingSettings,
-    IFundraisingSettings: None,
+    IFundraisingPage: [IFundraisingCampaign,],
+    IPersonalFundraiser: [IFundraisingPage, IFundraisingCampaign],
+    IFundraisingCampaign: [IFundraisingSettings,],
 }
 
 # Implementations of default value inheritance for some fields
@@ -54,51 +56,53 @@ def get_test_val(val):
         test_val = val.output
         if not test_val:
             return None
+
+    # check if the output of a relation choice field is empty
+    if isinstance(val, RelationValue):
+        test_val = val.to_id
+        if not test_val:
+            return None
+
     return test_val
 
 
 def get_default(behavior, name, binterface):
     """ Get the inherited default value based on the behavior inheritance map """
-    parent_binterface = BEHAVIOR_INHERITANCE_MAP.get(binterface, None)
-    if parent_binterface is None:
+    parent_binterfaces = BEHAVIOR_INHERITANCE_MAP.get(binterface, None)
+    if parent_binterfaces is None:
         return None
-
-    # Try the parent behavior
-    adapted = parent_binterface(behavior.context, None)
-    if adapted is None:
-        # NOTE: This assumes the direct parent is the provider of the inheritance behavior
-        adapted = parent_binterface(aq_parent(behavior.context), None)
+    # Try the parent behaviors in order.  Use the first behavior instance found
+    adapted = None
+    for parent_binterface in parent_binterfaces:
+        adapted = get_nearest_behavior(behavior.context, parent_binterface)
         if adapted is None:
-            return None
-    val = getattr(aq_base(adapted.context), '%s_%s' % (parent_binterface.__name__, name), None)
-    test_val = get_test_val(val)
-    if test_val is None:
+            continue
 
-        # If still no value, try inheriting from parent behavior's parent behavior
-        root_binterface = BEHAVIOR_INHERITANCE_MAP.get(parent_binterface, None)
-        if root_binterface is None:
-            return None
-        root_adapted = root_binterface(aq_parent(adapted.context), None)
-        if root_adapted is None:
-            return None
-        val = getattr(aq_base(root_adapted.context), '%s_%s' % (root_binterface.__name__, name), None)
-        if val is None:
-            return None
-        test_val = get_test_val(val)
-        if test_val is None:
-            return None
+        context = aq_base(adapted.context)
+        attr = '%s_%s' % (parent_binterface.__name__, name)
+        if hasattr(context, attr):
+            val = getattr(context, '%s_%s' % (parent_binterface.__name__, name), None)
+            test_val = get_test_val(val)
 
-    if test_val is not None:
-        return val
-    
+            # Handle instances of None being set as the actual field value
+            if test_val is not None:
+                return val
+
+        return get_default(adapted, name, parent_binterface)
 
 
+def get_nearest_behavior(context, binterface):
+    """ Accepts a context and a behavior interface.  Crawls from
+        context up the content tree until it either finds an object
+        which implements the behavior or hits IPloneSiteRoot.
 
-    val = getattr(aq_base(adapted), name, None)
-    if val is None:
-        return None
-    test_val = get_test_val(val)
-    if test_val is None:
-        return None
+        If found, returns an instance of the behavior.  Otherwise
+        returns None
+    """
 
-    return val
+    behavior = binterface(context, None)
+    if behavior is not None:
+        return behavior
+
+    if not IPloneSiteRoot.providedBy(context):
+        return get_nearest_behavior(aq_parent(aq_inner(context)), binterface)

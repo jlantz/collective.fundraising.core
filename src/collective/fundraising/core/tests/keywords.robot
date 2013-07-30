@@ -100,3 +100,11 @@ Populate Donation field
 Donation value should be
     [Arguments]  ${name}  ${value}
     Textfield value should be  form-widgets-IDonation-${name}  ${value}
+
+Populate Dedication field
+    [Arguments]  ${name}  ${value}
+    Input text  form-widgets-IDedication-${name}  ${value}
+
+Dedication value should be
+    [Arguments]  ${name}  ${value}
+    Textfield value should be  form-widgets-IDedication-${name}  ${value}

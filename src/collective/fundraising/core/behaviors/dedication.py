@@ -18,23 +18,30 @@ from collective.fundraising.core.behaviors.interfaces import IDedication
 from collective.fundraising.core.behaviors.utils import get_local_or_default
 from collective.fundraising.core.behaviors.utils import get_nearest_behavior
 
-class Donation(object):
+
+class Dedication(object):
     """
-       Adapter for Donation
+       Adapter for Dedications
     """
-    implements(IDonation)
+    implements(IDedication)
     adapts(IDexterityContent)
 
     def __init__(self,context):
         self.context = context
 
-    amount = get_local_or_default('amount', IDonation)
-    is_recurring = get_local_or_default('is_recurring', IDonation)
-    recurring_plan = get_local_or_default('recurring_plan', IDonation)
-    is_public = get_local_or_default('is_public', IDonation)
-    receipt_sent = get_local_or_default('receipt_sent', IDonation)
-    notification_sent = get_local_or_default('notification_sent', IDonation)
-    added = get_local_or_default('added', IDonation)
+    dedication_type = get_local_or_default('dedication_type', IDedication)
+    first_name = get_local_or_default('first_name', IDedication)
+    last_name = get_local_or_default('last_name', IDedication)
+    message = get_local_or_default('message', IDedication)
+    notification_type = get_local_or_default('notification_type', IDedication)
+    recipient_first_name = get_local_or_default('recipient_first_name', IDedication)
+    recipient_last_name = get_local_or_default('recipient_last_name', IDedication)
+    recipient_email = get_local_or_default('recipient_email', IDedication)
+    recipient_street_address = get_local_or_default('recipient_street_address', IDedication)
+    recipient_city = get_local_or_default('recipient_city', IDedication)
+    recipient_state = get_local_or_default('recipient_state', IDedication)
+    recipient_zip = get_local_or_default('recipient_zip', IDedication)
+    recipient_country = get_local_or_default('recipient_country', IDedication)
 
     def get_fundraising_settings(self):
         return get_nearest_behavior(self.context, IFundraisingSettings)
@@ -51,5 +58,5 @@ class Donation(object):
     def get_donor(self):
         return get_nearest_behavior(self.context, IDonor)
 
-    def get_dedication(self):
-        return get_nearest_behavior(self.context, IDedication)
+    def get_donation(self):
+        return get_nearest_behavior(self.context, IDonation)
