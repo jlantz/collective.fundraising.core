@@ -4,6 +4,7 @@ from Acquisition import aq_parent
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 from plone.app.textfield import RichTextValue
 from z3c.relationfield.relation import RelationValue
+from plone.namedfile.file import NamedBlobImage
 from collective.fundraising.core.behaviors.interfaces import IFundraisingCampaign
 from collective.fundraising.core.behaviors.interfaces import IFundraisingPage
 from collective.fundraising.core.behaviors.interfaces import IFundraisingSettings
@@ -76,6 +77,12 @@ def get_test_val(val):
     # check if the output of a relation choice field is empty
     if isinstance(val, RelationValue):
         test_val = val.to_id
+        if not test_val:
+            return None
+
+    # check if the output of a relation choice field is empty
+    if isinstance(val, NamedBlobImage):
+        test_val = val.filename
         if not test_val:
             return None
 

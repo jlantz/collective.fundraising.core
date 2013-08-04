@@ -40,8 +40,9 @@ class PersonalFundraiser(object):
     total_pledged = get_local('total_pledged', IPersonalFundraiser)
     count_pledged = get_local('count_pledged', IPersonalFundraiser)
 
-    # Inherit only, this field is not defined in the schema
+    # Inherited only, these field is not defined in the schema
     goal = get_local_or_default('goal', IPersonalFundraiser)
+    thank_you = get_local_or_default('thank_you', IPersonalFundraiser)
 
     def get_fundraising_settings(self):
         return get_nearest_behavior(self.context, IFundraisingSettings)

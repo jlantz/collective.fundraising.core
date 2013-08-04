@@ -25,6 +25,7 @@ class FundraisingCampaign(object):
     def __init__(self, context):
         self.context = context
 
+    image = get_local_or_default('image', IFundraisingCampaign) 
     thank_you = get_local_or_default('thank_you', IFundraisingCampaign) 
     receipt_footer = get_local_or_default('receipt_footer', IFundraisingCampaign)
     goal = get_local_or_default('goal', IFundraisingCampaign)

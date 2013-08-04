@@ -50,6 +50,11 @@ class IFundraisingSettings(model.Schema):
         description=_(u"Enter the key of the ask quantity to use if no level is provided in the url"),
         required=False,
     )
+    image = NamedBlobImage(
+        title=_(u"Default Campaign Image"),
+        description=_(u"Upload an image to use as the default image or campaigns, pages, and personal fundraisers."),
+        required=False,
+    )
     thank_you = RichText(
         title=_(u"Thank You Message"),
         description=_(u"Enter the default thank you message to be shown to donors after a donation along with their receipt and post donation actions.  This message is also sent to the email template for the donation thank you email."),
