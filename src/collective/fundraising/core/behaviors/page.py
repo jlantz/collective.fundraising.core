@@ -11,6 +11,7 @@ from collective.fundraising.core.behaviors.interfaces import IFundraisingSetting
 from collective.fundraising.core.behaviors.interfaces import IFundraisingCampaign
 from collective.fundraising.core.behaviors.interfaces import IFundraisingPage
 from collective.fundraising.core.behaviors.interfaces import IPersonalFundraiser
+from collective.fundraising.core.behaviors.utils import get_local
 from collective.fundraising.core.behaviors.utils import get_local_or_default
 from collective.fundraising.core.behaviors.utils import get_nearest_behavior
 
@@ -26,12 +27,13 @@ class FundraisingPage(object):
 
     image = get_local_or_default('image', IFundraisingPage)
     goal = get_local_or_default('goal', IFundraisingPage)
+    pf_goal = get_local_or_default('pf_goal', IFundraisingPage)
     start_date = get_local_or_default('start_date', IFundraisingPage)
     end_date = get_local_or_default('end_date', IFundraisingPage)
-    total = get_local_or_default('total', IFundraisingPage)
-    count = get_local_or_default('count', IFundraisingPage)
-    total_pledged = get_local_or_default('total_pledged', IFundraisingPage)
-    count_pledged = get_local_or_default('count_pledged', IFundraisingPage)
+    total = get_local('total', IFundraisingPage)
+    count = get_local('count', IFundraisingPage)
+    total_pledged = get_local('total_pledged', IFundraisingPage)
+    count_pledged = get_local('count_pledged', IFundraisingPage)
 
     def get_goal_percent(self):
         if self.total is None or self.goal is None:

@@ -12,7 +12,7 @@ from collective.fundraising.core.behaviors.interfaces import IPersonalFundraiser
 # Map of which behavior each behavior should consider its parent for
 # looking up default values
 BEHAVIOR_INHERITANCE_MAP = {
-    IFundraisingPage: [IFundraisingCampaign,],
+    IFundraisingPage: [IPersonalFundraiser, IFundraisingCampaign,],
     IPersonalFundraiser: [IFundraisingPage, IFundraisingCampaign],
     IFundraisingCampaign: [IFundraisingSettings,],
 }
@@ -25,7 +25,7 @@ def get_local_or_default(name, binterface):
 
         adapted = binterface(self.context, None)
         if adapted is not None:
-            val = getattr(adapted.context, '%s_%s' % (binterface.__name__, name), None)
+            val = getattr(aq_base(adapted.context), '%s_%s' % (binterface.__name__, name), None)
             test_val = get_test_val(val)
             if test_val is not None:
                 return val
@@ -44,6 +44,22 @@ def get_local_or_default(name, binterface):
 
     return property(getter, setter, deleter)
 
+def get_local(name, binterface):
+    
+    def getter(self):
+        adapted = binterface(self.context, None)
+        if adapted is not None:
+            return getattr(aq_base(adapted.context), '%s_%s' % (binterface.__name__, name), None)
+            
+    def setter(self, value):
+        """ Only store a value if it is different than the inherited default value """
+        setattr(self.context, '%s_%s' % (binterface.__name__, name), value)
+
+    def deleter(self):
+        if hasattr(self.context, '%s_%s' % (binterface.__name__, name)):
+            delattr(self.context, '%s_%s' (binterface.__name__, name))
+
+    return property(getter, setter, deleter)
 
 def get_test_val(val):
     """ Handle special value types where an attribute needs to be 
@@ -66,7 +82,7 @@ def get_test_val(val):
     return test_val
 
 
-def get_default(behavior, name, binterface):
+def get_default(behavior, name, binterface, last_binterface=None):
     """ Get the inherited default value based on the behavior inheritance map """
     parent_binterfaces = BEHAVIOR_INHERITANCE_MAP.get(binterface, None)
     if parent_binterfaces is None:
@@ -76,6 +92,10 @@ def get_default(behavior, name, binterface):
     for parent_binterface in parent_binterfaces:
         adapted = get_nearest_behavior(behavior.context, parent_binterface)
         if adapted is None:
+            continue
+
+        # Prevent infinite loops caused by parent mapping
+        if parent_binterface == last_binterface:
             continue
 
         context = aq_base(adapted.context)
@@ -88,7 +108,7 @@ def get_default(behavior, name, binterface):
             if test_val is not None:
                 return val
 
-        return get_default(adapted, name, parent_binterface)
+        return get_default(adapted, name, parent_binterface, binterface)
 
 
 def get_nearest_behavior(context, binterface):

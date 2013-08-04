@@ -12,6 +12,7 @@ from collective.fundraising.core.behaviors.interfaces import IFundraisingSetting
 from collective.fundraising.core.behaviors.interfaces import IFundraisingCampaign
 from collective.fundraising.core.behaviors.interfaces import IFundraisingPage
 from collective.fundraising.core.behaviors.interfaces import IPersonalFundraiser
+from collective.fundraising.core.behaviors.utils import get_local
 from collective.fundraising.core.behaviors.utils import get_local_or_default
 from collective.fundraising.core.behaviors.utils import get_nearest_behavior
 
@@ -34,10 +35,13 @@ class PersonalFundraiser(object):
     pf_goal = get_local_or_default('pf_goal', IPersonalFundraiser)
     date_start = get_local_or_default('date_start', IPersonalFundraiser)
     date_end = get_local_or_default('date_end', IPersonalFundraiser)
-    total = get_local_or_default('total', IPersonalFundraiser)
-    count = get_local_or_default('count', IPersonalFundraiser)
-    total_pledged = get_local_or_default('total_pledged', IPersonalFundraiser)
-    count_pledged = get_local_or_default('count_pledged', IPersonalFundraiser)
+    total = get_local('total', IPersonalFundraiser)
+    count = get_local('count', IPersonalFundraiser)
+    total_pledged = get_local('total_pledged', IPersonalFundraiser)
+    count_pledged = get_local('count_pledged', IPersonalFundraiser)
+
+    # Inherit only, this field is not defined in the schema
+    goal = get_local_or_default('goal', IPersonalFundraiser)
 
     def get_fundraising_settings(self):
         return get_nearest_behavior(self.context, IFundraisingSettings)

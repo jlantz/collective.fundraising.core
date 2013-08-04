@@ -18,8 +18,8 @@ Create dexterity type
     Go to  ${PLONE_URL}/@@dexterity-types
     Click Overlay Button  css=#add-type input
     Input Text  css=#formfield-form-widgets-title input  ${title}
-    Input Text  css=#formfield-form-widgets-id input  ${id}
     Input Text  css=#formfield-form-widgets-description textarea  Test content type: ${title}
+    Input Text  css=#formfield-form-widgets-id input  ${id}
     Click Button  Add
     
     Wait until page contains element  link=Overview

@@ -6,7 +6,7 @@ from collective.fundraising.core.testing import\
     COLLECTIVE_FUNDRAISING_CORE_INTEGRATION
 
 
-class TestEmailData(unittest.TestCase):
+class TestEmailAdapters(unittest.TestCase):
 
     layer = COLLECTIVE_FUNDRAISING_CORE_INTEGRATION
     
@@ -70,7 +70,7 @@ class TestEmailData(unittest.TestCase):
         # Set test campaign values
         self.campaign.goal = 1000
         self.campaign.total = 150.0
-       
+      
         # Set test page values 
         self.page.goal = 200
         self.page.total = 50.0

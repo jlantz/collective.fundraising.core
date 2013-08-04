@@ -294,6 +294,11 @@ class IFundraisingPage(model.Schema):
         description=_(u"The page's fundraising goal."),
         required=False,
     )
+    pf_goal = schema.Int(
+        title=_(u"Default Personal Fundriaser Goal"),
+        description=_(u"The default goal when setting up personal fundraisers from the page."),
+        required=False,
+    )
     date_start = schema.Date(
         title=_(u"Start Date"),
         description=_(u"The page's start date."),
