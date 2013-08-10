@@ -1,4 +1,4 @@
-*** Settings ***
+*** Organization ***
 
 Library  Selenium2Library  timeout=10  implicit_wait=0.5 
 Library  OperatingSystem
@@ -37,21 +37,21 @@ Enable behavior
     Page should contain  Behaviors successfully updated
     Checkbox should be selected  id=${for}
 
-Populate Fundraising Settings field
+Populate Fundraising Organization field
     [Arguments]  ${name}  ${value}
-    Input text  form-widgets-IFundraisingSettings-${name}  ${value}
+    Input text  form-widgets-IFundraisingOrganization-${name}  ${value}
 
-Select Fundraising Settings checkbox
+Select Fundraising Organization checkbox
     [Arguments]  ${name}
-    Select checkbox  form-widgets-IFundraisingSettings-${name}-0
+    Select checkbox  form-widgets-IFundraisingOrganization-${name}-0
 
-Fundraising Settings value should be
+Fundraising Organization value should be
     [Arguments]  ${name}  ${value}
-    Textfield value should be  form-widgets-IFundraisingSettings-${name}  ${value}
+    Textfield value should be  form-widgets-IFundraisingOrganization-${name}  ${value}
 
-Fundraising Settings checkbox should be selected
+Fundraising Organization checkbox should be selected
     [Arguments]  ${name}
-    Checkbox should be selected  form-widgets-IFundraisingSettings-${name}-0
+    Checkbox should be selected  form-widgets-IFundraisingOrganization-${name}-0
 
 Populate Fundraising Campaign field
     [Arguments]  ${name}  ${value}

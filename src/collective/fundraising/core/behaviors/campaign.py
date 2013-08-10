@@ -13,7 +13,7 @@ from collective.fundraising.core.behaviors.utils import get_local
 from collective.fundraising.core.behaviors.utils import get_local_or_default
 from collective.fundraising.core.behaviors.utils import get_nearest_behavior
 from collective.fundraising.core.behaviors.interfaces import IFundraisingCampaign
-from collective.fundraising.core.behaviors.interfaces import IFundraisingSettings
+from collective.fundraising.core.behaviors.interfaces import IFundraisingOrganization
 
 class FundraisingCampaign(object):
     """
@@ -50,8 +50,8 @@ class FundraisingCampaign(object):
     pf_appeal = get_local_or_default('pf_appeal', IFundraisingCampaign)
     pf_thank_you = get_local_or_default('pf_thank_you', IFundraisingCampaign)
 
-    def get_fundraising_settings(self):
-        return get_nearest_behavior(self.context, IFundraisingSettings)
+    def get_fundraising_organization(self):
+        return get_nearest_behavior(self.context, IFundraisingOrganization)
        
     def get_goal_percent(self):
         if self.total is None or self.goal is None:

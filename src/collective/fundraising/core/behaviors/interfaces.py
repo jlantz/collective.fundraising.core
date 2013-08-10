@@ -11,9 +11,9 @@ from plone.formwidget.contenttree import ObjPathSourceBinder
 from collective.fundraising.core import MessageFactory as _
 
 
-class IFundraisingSettings(model.Schema):
+class IFundraisingOrganization(model.Schema):
     """
-       Marker/Form interface for Fundraising Settings
+       Marker/Form interface for Fundraising Organization
     """
 
     org_name = schema.TextLine(
@@ -142,7 +142,7 @@ class IFundraisingSettings(model.Schema):
         default=0,
     )
     
-alsoProvides(IFundraisingSettings, IFormFieldProvider)
+alsoProvides(IFundraisingOrganization, IFormFieldProvider)
 
 
 class IFundraisingCampaign(model.Schema):
@@ -277,8 +277,8 @@ class IFundraisingCampaign(model.Schema):
         required=False,
     )
 
-    def get_fundraising_settings(self):
-        """ Returns the related IFundraisingSettings behavior instance if it can be found or None """
+    def get_fundraising_organization(self):
+        """ Returns the related IFundraisingOrganization behavior instance if it can be found or None """
 
 
 alsoProvides(IFundraisingCampaign, IFormFieldProvider)
@@ -338,8 +338,8 @@ class IFundraisingPage(model.Schema):
     def get_fundraising_campaign(self):
         """ Returns the related IFundraisingCampaign behavior instance if it can be found or None """
 
-    def get_fundraising_settings(self):
-        """ Returns the related IFundraisingSettings behavior instance if it can be found or None """
+    def get_fundraising_organization(self):
+        """ Returns the related IFundraisingOrganization behavior instance if it can be found or None """
 
     def get_personal_fundraiser(self):
         """ Returns the related IPersonalFundraiser behavior instance if it can be found or None """
@@ -418,8 +418,8 @@ class IPersonalFundraiser(model.Schema):
     def get_fundraising_campaign(self):
         """ Returns the related IFundraisingCampaign behavior instance if it can be found or None """
 
-    def get_fundraising_settings(self):
-        """ Returns the related IFundraisingSettings behavior instance if it can be found or None """
+    def get_fundraising_organization(self):
+        """ Returns the related IFundraisingOrganization behavior instance if it can be found or None """
 
 alsoProvides(IPersonalFundraiser, IFormFieldProvider)
 
@@ -522,8 +522,8 @@ class IDonation(model.Schema):
         default=False,
     )
 
-    def get_fundraising_settings(self):
-        """ Returns the related IFundraisingSettings behavior instance if it can be found or None """
+    def get_fundraising_organization(self):
+        """ Returns the related IFundraisingOrganization behavior instance if it can be found or None """
 
     def get_fundraising_campaign(self):
         """ Returns the related IFundraisingCampaign behavior instance if it can be found or None """
@@ -610,8 +610,8 @@ class IDedication(model.Schema):
         required = False,
     )
 
-    def get_fundraising_settings(self):
-        """ Returns the related IFundraisingSettings behavior instance if it can be found or None """
+    def get_fundraising_organization(self):
+        """ Returns the related IFundraisingOrganization behavior instance if it can be found or None """
 
     def get_fundraising_campaign(self):
         """ Returns the related IFundraisingCampaign behavior instance if it can be found or None """

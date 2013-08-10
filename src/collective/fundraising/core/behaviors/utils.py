@@ -7,7 +7,7 @@ from z3c.relationfield.relation import RelationValue
 from plone.namedfile.file import NamedBlobImage
 from collective.fundraising.core.behaviors.interfaces import IFundraisingCampaign
 from collective.fundraising.core.behaviors.interfaces import IFundraisingPage
-from collective.fundraising.core.behaviors.interfaces import IFundraisingSettings
+from collective.fundraising.core.behaviors.interfaces import IFundraisingOrganization
 from collective.fundraising.core.behaviors.interfaces import IPersonalFundraiser
 
 # Map of which behavior each behavior should consider its parent for
@@ -15,7 +15,7 @@ from collective.fundraising.core.behaviors.interfaces import IPersonalFundraiser
 BEHAVIOR_INHERITANCE_MAP = {
     IFundraisingPage: [IPersonalFundraiser, IFundraisingCampaign,],
     IPersonalFundraiser: [IFundraisingPage, IFundraisingCampaign],
-    IFundraisingCampaign: [IFundraisingSettings,],
+    IFundraisingCampaign: [IFundraisingOrganization,],
 }
 
 # Implementations of default value inheritance for some fields

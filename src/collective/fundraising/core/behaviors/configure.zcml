@@ -37,10 +37,10 @@
       />
 
   <plone:behavior
-      title="Fundraising Settings"
-      description="Enables functionality to manage a set of fundraising settings"
-      provides=".interfaces.IFundraisingSettings"
-      factory=".settings.FundraisingSettings"
+      title="Fundraising Organization"
+      description="Enables functionality to manage a set of fundraising organization"
+      provides=".interfaces.IFundraisingOrganization"
+      factory=".organization.FundraisingOrganization"
       for="plone.dexterity.interfaces.IDexterityContent"
       />
 

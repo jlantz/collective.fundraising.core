@@ -16,12 +16,12 @@ class TestEmailAdapters(unittest.TestCase):
         self.request = self.layer['request']
         from plone.dexterity.fti import DexterityFTI
 
-        # Make fundraising_campaign type providing campaign and settings behavior
+        # Make fundraising_campaign type providing campaign and organization behavior
         fti = DexterityFTI('campaign')
         self.portal.portal_types._setObject('campaign', fti)
         fti.klass = 'plone.dexterity.content.Container'
         fti.filter_content_types = False
-        fti.behaviors = ('collective.fundraising.core.behaviors.interfaces.IFundraisingSettings',
+        fti.behaviors = ('collective.fundraising.core.behaviors.interfaces.IFundraisingOrganization',
                          'collective.fundraising.core.behaviors.interfaces.IFundraisingCampaign',)
 
         # Make personal_page type providing the page and personal fundraiser behaviors

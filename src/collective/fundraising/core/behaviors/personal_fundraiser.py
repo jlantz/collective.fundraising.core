@@ -8,7 +8,7 @@ from plone.app.textfield import RichText
 from plone.namedfile.field import NamedBlobImage
 
 from collective.fundraising.core import MessageFactory as _
-from collective.fundraising.core.behaviors.interfaces import IFundraisingSettings
+from collective.fundraising.core.behaviors.interfaces import IFundraisingOrganization
 from collective.fundraising.core.behaviors.interfaces import IFundraisingCampaign
 from collective.fundraising.core.behaviors.interfaces import IFundraisingPage
 from collective.fundraising.core.behaviors.interfaces import IPersonalFundraiser
@@ -44,8 +44,8 @@ class PersonalFundraiser(object):
     goal = get_local_or_default('goal', IPersonalFundraiser)
     thank_you = get_local_or_default('thank_you', IPersonalFundraiser)
 
-    def get_fundraising_settings(self):
-        return get_nearest_behavior(self.context, IFundraisingSettings)
+    def get_fundraising_organization(self):
+        return get_nearest_behavior(self.context, IFundraisingOrganization)
 
     def get_fundraising_campaign(self):
         return get_nearest_behavior(self.context, IFundraisingCampaign)
